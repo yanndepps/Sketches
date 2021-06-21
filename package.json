@@ -1,0 +1,24 @@
+{
+  "name": "sketches",
+  "version": "1.0.0",
+  "description": "-   [canvas-sketch](https://github.com/mattdesl/canvas-sketch) is a loose collection of tools, modules and ressources for creating generative art in JavaScript and the browser using `<canvas>` tag. it is designed to help create artworks and images with code, randomness, algorithms and emergent systems. -   it exports high-resolution PNG or Giclée prints, render image sequences to GIF and MP4 loops, generates SVG files for mechanical pen plotters, automatically git hash your artworks for long-term archiving, and much more. -   these tools can be used on their own, or can be combined with your favourite graphics library like ThreeJS, P5.js, D3, etc.",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "canvas-sketch": "^0.7.4",
+    "canvas-sketch-util": "^1.10.0",
+    "glsl-noise": "^0.0.0",
+    "nice-color-palettes": "^3.0.0",
+    "p5": "^1.3.1",
+    "riso-colors": "^1.0.1",
+    "three": "^0.129.0"
+  }
+}
