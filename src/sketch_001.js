@@ -15,7 +15,7 @@ const scale = 1;
 const debug = false;
 const trace = true;
 
-const seed = 'flow_fields_009';
+const seed = 'flow_fields_0000';
 Random.setSeed(seed);
 
 const settings = {
