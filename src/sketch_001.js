@@ -15,7 +15,8 @@ const scale = 1;
 const debug = false;
 const trace = true;
 
-const seed = 'depps_flow_fields_03';
+// const seed = 'depps_flow_fields_03';
+const seed = 03;
 Random.setSeed(seed);
 
 const settings = {
