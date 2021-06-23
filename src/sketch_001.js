@@ -9,13 +9,19 @@ const canvasSketch = require('canvas-sketch');
 const Random = require('canvas-sketch-util/random');
 const { mapRange } = require('canvas-sketch-util/math');
 const { clipPolylinesToBox } = require('canvas-sketch-util/geometry');
+const palettes = require('nice-color-palettes');
 
-const scale = 2;
+const scale = 1;
 const debug = false;
 const trace = true;
 
+const seed = 'depps_flow_fields_03';
+Random.setSeed(seed);
+
 const settings = {
-  dimensions: [ 600 * scale, 600 * scale ],
+  prefix: 'sketch_001',
+  suffix: seed,
+  dimensions: [ 595 * scale, 842 * scale ], // 600x600
   scaleToView: false,
   animate: true,
   duration: 12,
@@ -34,8 +40,13 @@ const STEP = 5 * scale;
 const PARTICLE_STEPS = 30 * scale;
 
 const sketch = () => {
-  const seed = 'noise-flow-field_12';
-  Random.setSeed(seed);
+  // more color choices and randomness
+  const colorCount = Random.rangeFloor(2, 6);
+  const palette = Random.shuffle(Random.pick(palettes))
+                        .slice(0, colorCount);
+
+  // const seed = 'depps_flow_fields';
+  // Random.setSeed(seed);
 
   let particles = [];
   let STEPS_TAKEN = 0;
@@ -55,7 +66,8 @@ const sketch = () => {
           line: [],
           color: debug
             ? '#da3900'
-            : Random.pick(['#fcfaf1', '#aaa', '#cacaca', '#e6b31e']),
+            // : Random.pick(['#fcfaf1', '#aaa', '#cacaca', '#e6b31e']),
+            : Random.pick(palette),
         });
       }
     },
@@ -86,7 +98,7 @@ const sketch = () => {
 
       const clippedLines = clipPolylinesToBox(lines, clipBox, false, false);
 
-      context.lineWidth = 4;
+      context.lineWidth = 2; // 4
       context.lineJoin = 'round';
       context.lineCap = 'round';
 
@@ -108,7 +120,7 @@ const sketch = () => {
           const tail = line[line.length - 1];
           context.fillStyle = particles[index].color;
           context.beginPath();
-          context.arc(...tail, 10, 0, 2 * Math.PI);
+          context.arc(...tail, 5, 0, 2 * Math.PI);
           context.fill();
         });
       }
