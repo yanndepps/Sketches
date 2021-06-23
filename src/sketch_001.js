@@ -19,8 +19,7 @@ const seed = 'flow_fields_007';
 Random.setSeed(seed);
 
 const settings = {
-  prefix: 'sketch_001',
-  suffix: seed,
+  suffix: Random.getSeed(seed),
   dimensions: [ 595 * scale, 842 * scale ], // 600x600
   scaleToView: false,
   animate: true,
