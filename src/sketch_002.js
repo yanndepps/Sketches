@@ -8,13 +8,17 @@ const palettes = require('nice-color-palettes');
 const p5 = require('p5');
 new p5();
 
+const seed = 'grid_arcs_062821';
+Random.setSeed(seed);
+
 const settings = {
   p5: true,
+  suffix: Random.getRandomSeed(seed),
   dimensions: [ 600, 600 ],
   context: '2d',
   animate: true,
-  // duration: 2,
-  // loop: true
+  duration: 2,
+  loop: false
 };
 
 const colorCount = Random.rangeFloor(2, 6);
@@ -22,15 +26,18 @@ const palette = Random.shuffle(Random.pick(palettes).slice(0, colorCount));
 const bg = palette.shift();
 const fillColor = Random.pick(palette);
 
+const rndpos = Random.rangeFloor(1, 16);
+console.log(rndpos);
+
 const sketch = ({ width, height }) => {
-  const dim = Math.min(width, height);
-  const sz = dim * 0.084;
+  // const dim = Math.min(width, height);
+  // const sz = dim * 0.084;
   // console.log(sz*2);
 
   fill(fillColor);
   noStroke();
 
-  return ({ time }) => {
+  return ({ time, playhead }) => {
     background(bg);
 
     const tilesX = 4;
@@ -43,7 +50,7 @@ const sketch = ({ width, height }) => {
         const posX = tileW * x;
         const posY = tileH * y;
 
-        let wave = sin(Math.PI * ( time * 0.25 ) + x * 5 + y * 3);
+        let wave = sin(Math.PI * ( playhead * 0.125 ) + x * rndpos + y * 3);
         // let wave = cos(radians(frameCount + x * 10 + y * 10));
         let mappedWave = map(wave, -1, 1, 0, 5);
         const selector = floor(mappedWave);
