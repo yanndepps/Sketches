@@ -3,22 +3,29 @@
  */
 
 const canvasSketch = require('canvas-sketch');
+const rnd = require('canvas-sketch-util/random');
 
 const settings = {
   dimensions: [1080, 1080]
 };
 
-const sketch = () => {
-  return ({ context, width, height }) => {
+const sketch = ({ width, height }) => {
+  // init objects
+  const agents = [];
+  for (let i = 0; i < 40; i++) {
+    const x = rnd.range(0, width);
+    const y = rnd.range(0, height);
+    agents.push(new Agent(x, y));
+  }
+
+  return ({ context }) => {
     // bg
     context.fillStyle = 'white';
     context.fillRect(0, 0, width, height);
-    // ---
-    const agentA = new Agent(800, 400);
-    const agentB = new Agent(400, 800);
-
-    agentA.draw(context);
-    agentB.draw(context);
+    // draw objects
+    agents.forEach(agent => {
+      agent.draw(context);
+    });
   };
 };
 
