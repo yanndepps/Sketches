@@ -1,3 +1,7 @@
+/*
+ * Transforms
+ */
+
 const canvasSketch = require('canvas-sketch');
 const mth = require('canvas-sketch-util/math');
 const rnd = require('canvas-sketch-util/random');
