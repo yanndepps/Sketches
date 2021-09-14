@@ -14,10 +14,10 @@ const sketch = () => {
     context.fillStyle = 'white';
     context.fillRect(0, 0, width, height);
     // ---
-    const point = { x: 800, y: 400 };
+    const point = { x: 800, y: 400, radius: 10 };
 
     context.beginPath();
-    context.arc(point.x, point.y, 10, 0, Math.PI * 2);
+    context.arc(point.x, point.y, point.radius, 0, Math.PI * 2);
     context.fillStyle = 'black';
     context.fill();
   };
