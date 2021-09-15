@@ -14,7 +14,8 @@ const settings = {
 const sketch = ({ width, height }) => {
   // init objects
   const agents = [];
-  for (let i = 0; i < 40; i++) {
+  const numAgents = 40;
+  for (let i = 0; i < numAgents; i++) {
     const x = rnd.range(0, width);
     const y = rnd.range(0, height);
     agents.push(new Agent(x, y));
@@ -27,6 +28,8 @@ const sketch = ({ width, height }) => {
     // console.log('sizing ->', ns)
     // bg
     context.fillStyle = 'white';
+    // context.fillStyle = 'black';
+    // context.strokeStyle = 'white';
     context.fillRect(0, 0, width, height);
     // draw objects
     for (let i = 0; i < agents.length; i++) {
