@@ -1,11 +1,14 @@
 const canvasSketch = require('canvas-sketch');
+const rnd = require('canvas-sketch-util/random');
+const mth = require('canvas-sketch-util/math');
 
 const settings = {
-  dimensions: [1080, 1080]
+  dimensions: [1080, 1080],
+  animate: true
 };
 
 const sketch = () => {
-  return ({ context, width, height }) => {
+  return ({ context, width, height, frame }) => {
     // consistant sizing regardless of portrait/landscape modes
     const dim = Math.min(width, height);
     const ns = Math.floor(dim * 0.0016);
@@ -36,15 +39,27 @@ const sketch = () => {
       const w = cellw * 0.8; // to draw a line a bit smaller than the cell
       const h = cellh * 0.8;
 
+      // add noise
+      const freq = 0.001;
+      const amp = 0.20;
+      const scaleFactor = 30;
+      const n = rnd.noise2D(x + frame * 10, y, freq);
+      const angle = n * Math.PI * amp;
+      // const scale = (n + 1) / 2 * scaleFactor; // one way to map our values in the range of 0 to 1
+      // const scale = (n * 0.5 + 0.5) * scaleFactor; // another way to remap -1 and 1 to 0 and 1
+      const scale = mth.mapRange(n, -1, 1, 1, scaleFactor); // and using an utility function
+
       // draw
       context.save();
 
       context.translate(x, y);
       // context.translate(margx, margy);
       // context.translate(cellw * 0.5, cellh * 0.5);
+      context.rotate(angle);
 
-      context.lineWidth = 4;
+      context.lineWidth = scale;
 
+      context.beginPath();
       context.moveTo(w * -0.5, 0);
       context.lineTo(w * 0.5, 0);
       context.stroke();
