@@ -13,27 +13,30 @@ const sketch = () => {
     // bg
     context.fillStyle = 'white';
     context.fillRect(0, 0, width, height);
-    // ---
-    const cols = 10;
-    const rows = 10;
-    const numCells = cols * rows;
 
-    const gridw = width * 0.8;
-    const gridh = height * 0.8;
-    const cellw = gridw / cols;
-    const cellh = gridh / rows;
-    const margx = (width - gridw) * 0.5;
-    const margy = (height - gridh) * 0.5;
-    // ---
+    // describe our grid
+    const cols = 10; // columns
+    const rows = 10; // rows
+    const numCells = cols * rows; // num of cells
+
+    const gridw = width * 0.8; // width of the grid
+    const gridh = height * 0.8; // height of the grid
+    const cellw = gridw / cols; // width of each cell in the grid
+    const cellh = gridh / rows; // height of each cell in the grid
+    const margx = (width - gridw) * 0.5; // margin x ( difference between the size of the grid and the size of the canvas halved )
+    const margy = (height - gridh) * 0.5; // margin y
+
+    // go over each cell of the grid
     for (let i = 0; i < numCells; i++) {
-      const col = i % cols;
-      const row = Math.floor(i / cols);
+      const col = i % cols; // use the remainder operator to calculate the columns
+      const row = Math.floor(i / cols); // check the num of columns to find the end of a row
 
-      const x = col * cellw + margx + (cellw * 0.5);
+      const x = col * cellw + margx + (cellw * 0.5); // find the x and y values of each cell
       const y = row * cellh + margy + (cellh * 0.5);
-      const w = cellw * 0.8;
+      const w = cellw * 0.8; // to draw a line a bit smaller than the cell
       const h = cellh * 0.8;
 
+      // draw
       context.save();
 
       context.translate(x, y);
