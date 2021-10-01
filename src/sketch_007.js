@@ -1,10 +1,27 @@
+/*
+ * Noise
+ */
+
 const canvasSketch = require('canvas-sketch');
 const rnd = require('canvas-sketch-util/random');
 const mth = require('canvas-sketch-util/math');
+const Tweakpane = require('tweakpane');
 
 const settings = {
   dimensions: [1080, 1080],
   animate: true
+};
+
+const params = {
+  cols: 10,
+  rows: 10,
+  scaleMin: 1,
+  scaleMax: 30,
+  freq: 0.001,
+  amp: 0.2,
+  frame: 0,
+  animate: true,
+  lineCap: 'butt',
 };
 
 const sketch = () => {
@@ -18,8 +35,8 @@ const sketch = () => {
     context.fillRect(0, 0, width, height);
 
     // describe our grid
-    const cols = 10; // columns
-    const rows = 10; // rows
+    const cols = params.cols; // columns
+    const rows = params.rows; // rows
     const numCells = cols * rows; // num of cells
 
     const gridw = width * 0.8; // width of the grid
@@ -40,14 +57,17 @@ const sketch = () => {
       const h = cellh * 0.8;
 
       // add noise
-      const freq = 0.001;
-      const amp = 0.20;
-      const scaleFactor = 30;
-      const n = rnd.noise2D(x + frame * 10, y, freq);
+      const freq = params.freq;
+      const amp = params.amp;
+      // const scaleFactor = 30;
+
+      // const n = rnd.noise2D(x + frame * 10, y, freq);
+      const f = params.animate ? frame : params.frame;
+      const n = rnd.noise3D(x, y, f * 10, freq);
       const angle = n * Math.PI * amp;
       // const scale = (n + 1) / 2 * scaleFactor; // one way to map our values in the range of 0 to 1
       // const scale = (n * 0.5 + 0.5) * scaleFactor; // another way to remap -1 and 1 to 0 and 1
-      const scale = mth.mapRange(n, -1, 1, 1, scaleFactor); // and using an utility function
+      const scale = mth.mapRange(n, -1, 1, params.scaleMin, params.scaleMax); // and using an utility function
 
       // draw
       context.save();
@@ -58,6 +78,7 @@ const sketch = () => {
       context.rotate(angle);
 
       context.lineWidth = scale;
+      context.lineCap = params.lineCap;
 
       context.beginPath();
       context.moveTo(w * -0.5, 0);
@@ -68,5 +89,25 @@ const sketch = () => {
     }
   };
 };
+
+const createPane = () => {
+  const pane = new Tweakpane.Pane();
+  let folder;
+  // Grid
+  folder = pane.addFolder({ title: 'Grid' });
+  folder.addInput(params, 'lineCap', { options: { butt: 'butt', round: 'round', square: 'square' } });
+  folder.addInput(params, 'cols', { min: 2, max: 50, step: 1 });
+  folder.addInput(params, 'rows', { min: 2, max: 50, step: 1 });
+  folder.addInput(params, 'scaleMin', { min: 1, max: 100 });
+  folder.addInput(params, 'scaleMax', { min: 1, max: 100 });
+  // Noise
+  folder = pane.addFolder({ title: 'Noise' });
+  folder.addInput(params, 'freq', { min: -0.01, max: 0.01 });
+  folder.addInput(params, 'amp', { min: 0, max: 1 });
+  folder.addInput(params, 'animate');
+  folder.addInput(params, 'frame', { min: 0, max: 999 });
+};
+
+createPane();
 
 canvasSketch(sketch, settings);
