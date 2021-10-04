@@ -11,10 +11,23 @@ const settings = {
 let manager;
 
 let text = 'A';
-let fontSize = 800;
-let fontFamily = 'serif';
+let fontSize;
+// let fontFamily = 'serif';
 
-const sketch = () => {
+// second canvas
+const typeCanvas = document.createElement('canvas');
+const typeContext = typeCanvas.getContext('2d');
+
+const sketch = ({ context, width, height }) => {
+  // ---
+  const cell = 20;
+  const cols = Math.floor(width / cell);
+  const rows = Math.floor(height / cell);
+  const numCells = cols * rows;
+
+  typeCanvas.width = cols;
+  typeCanvas.height = rows;
+
   // load fonts using browser's "FontFace" API to load fonts from javascript
   // this ensures the font is renderable before first drawing to the canvas
   const fontUrl = '../assets/sketch_008/font/bauhaus.otf';
@@ -26,34 +39,65 @@ const sketch = () => {
   document.fonts.add(myFont);
 
   return ({ context, width, height }) => {
-    context.fillStyle = 'white';
-    context.fillRect(0, 0, width, height);
+    typeContext.fillStyle = 'black';
+    typeContext.fillRect(0, 0, cols, rows);
 
+    fontSize = cols;
 
-    context.fillStyle = 'black';
-    context.font = `${fontSize}px "bauhaus"`;
-    context.textBaseline = 'top';
-    // context.textAlign = 'center';
+    typeContext.fillStyle = 'white';
+    typeContext.font = `${fontSize}px "bauhaus"`;
+    typeContext.textBaseline = 'top';
 
-    const metrics = context.measureText(text);
+    const metrics = typeContext.measureText(text);
     const mx = metrics.actualBoundingBoxLeft * -1;
     const my = metrics.actualBoundingBoxAscent * -1;
     const mw = metrics.actualBoundingBoxLeft + metrics.actualBoundingBoxRight;
     const mh = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
 
-    const x = (width - mw) * 0.5 - mx;
-    const y = (height - mh) * 0.5 - my;
+    const tx = (cols - mw) * 0.5 - mx;
+    const ty = (rows - mh) * 0.5 - my;
 
-    context.save();
-    context.translate(x, y);
+    typeContext.save();
+    typeContext.translate(tx, ty);
 
-    // bounding box
-    context.beginPath();
-    context.rect(mx, my, mw, mh);
-    context.stroke();
+    // show bounding box
+    typeContext.beginPath();
+    typeContext.rect(mx, my, mw, mh);
+    typeContext.stroke();
 
-    context.fillText(text, 0, 0);
-    context.restore();
+    typeContext.fillText(text, 0, 0);
+    typeContext.restore();
+
+    const typeData = typeContext.getImageData(0, 0, cols, rows).data;
+
+    context.drawImage(typeCanvas, 0, 0);
+
+    for (let i = 0; i < numCells; i++) {
+      const col = i % cols;
+      const row = Math.floor(i / cols);
+
+      const x = col * cell;
+      const y = row * cell;
+
+      const r = typeData[i * 4];
+      const g = typeData[i * 4 + 1];
+      const b = typeData[i * 4 + 2];
+      const a = typeData[i * 4 + 3];
+
+      context.fillStyle = `rgb(${r}, ${g}, ${b})`;
+
+      context.save();
+      context.translate(x, y);
+      context.translate(cell * 0.5, cell * 0.5);
+
+      // context.fillRect(0, 0, cell, cell);
+
+      context.beginPath();
+      context.arc(0, 0, cell * 0.5, 0, Math.PI * 2);
+      context.fill();
+
+      context.restore();
+    }
   };
 };
 
