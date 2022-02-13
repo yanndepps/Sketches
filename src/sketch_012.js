@@ -1,6 +1,7 @@
 /*
  * Crack 01
  * Recoded from https://openprocessing.org/crayon/24/
+ * added tweakpane
  */
 
 const canvasSketch = require('canvas-sketch');
@@ -20,27 +21,26 @@ const settings = {
 };
 
 const params = {
-  seed: Math.floor(Math.random() * 1000)
+  seed: Math.floor(Math.random() * 1000),
+  lines: Math.floor(Math.random() * 6 + 4),
+  noise_Strength: (Math.floor(Math.random() * 10) * 10) + 50,
 }
 
-// OPC start
-// let seed = Math.floor(Math.random() * 1000);
 let seed = params.seed;
-let lines = Math.floor(Math.random() * 6 + 4);
-let noise_Strength = (Math.floor(Math.random() * 10) * 10) + 50;
-// OPC end
+let lines = params.lines;
+let noise_Strength = params.noise_Strength;
+
+let colors = [];
 let pSeed = seed;
 let pLines = lines;
 let pNoise_Strength = noise_Strength;
-let colors = [];
 let size;
 
-// pane
-
 const sketch = () => {
+  smooth(6);
   generate();
   return ({ context, width, height }) => {
-    if (params.seed != pSeed || pLines != lines || pNoise_Strength != pNoise_Strength) {
+    if (params.seed != pSeed || pLines != params.lines || pNoise_Strength != params.noise_Strength) {
       generate();
     }
   };
@@ -49,8 +49,9 @@ const sketch = () => {
 function generate() {
   size = min(width, height);
   pSeed = params.seed;
-  pLines = lines;
-  pNoise_Strength = noise_Strength;
+  pLines = params.lines;
+  pNoise_Strength = params.noise_Strength;
+
   randomSeed(seed);
   // colors = ["#333333", "#ed3441", "#ffd630", "#329fe3", "#154296"];
   colors = ["#ffffff", "#ed3441", "#ffd630", "#329fe3", "#154296"];
@@ -60,7 +61,7 @@ function generate() {
   translate(width / 2, height / 2);
   scale(0.7);
   translate(-width / 2, -height / 2);
-  let num = lines;
+  let num = params.lines;
   for (let i = 0; i < num; i++) {
     let y = map(i, 0, num - 1, 0, height);
     let col = color(colors[i % colors.length]);
@@ -85,7 +86,7 @@ function noiseCurve(x, y) {
   beginShape();
   for (let i = 0; i < c; i += amt) {
     let scl = 0.0005 / (size * 0.002);
-    let str = noise(x * scl, y * scl, params.seed) * noise_Strength;
+    let str = noise(x * scl, y * scl, params.seed) * params.noise_Strength;
     let angle = noise(x * scl, y * scl, i * 0.0002) * str;
     vertex(x, y);
     x += cos(angle) * step;
@@ -99,6 +100,8 @@ const createPane = () => {
   let folder;
   folder = pane.addFolder({ title: 'parameters' });
   folder.addInput(params, 'seed', { min: 0, max: 1000, step: 1 });
+  folder.addInput(params, 'lines', { min: 4, max: 10, step: 1 });
+  folder.addInput(params, 'noise_Strength', { min: 100, max: 200, step: 1 });
 };
 
 createPane();
