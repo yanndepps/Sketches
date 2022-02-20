@@ -1,8 +1,8 @@
 /*
- * 20.02.22 -> #1
+ * 20.02.2022 -> #1
  * Beautiful Noise with Three.js
  * Recoded -> https://www.youtube.com/watch?v=sPBb-0al7Y0
- * 26.51
+ * 36.07
  */
 
 // devTools at 21.40
@@ -13,8 +13,10 @@ require("three/examples/js/controls/OrbitControls");
 // import * as THREE from 'three';
 // import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
-import fragment from '../shaders/sketch_013/fragment.glsl';
-import vertex from '../shaders/sketch_013/vertex.glsl';
+import fragment_01 from '../shaders/sketch_013/fragment_01.glsl';
+import vertex_01 from '../shaders/sketch_013/vertex_01.glsl';
+import fragment_02 from '../shaders/sketch_013/fragment_02.glsl';
+import vertex_02 from '../shaders/sketch_013/vertex_02.glsl';
 import canvasSketch from 'canvas-sketch';
 import GUI from 'lil-gui';
 const gui = new GUI();
@@ -49,12 +51,11 @@ const sketch = ({ context }) => {
   // Setup your scene
   const scene = new THREE.Scene();
 
-  // Setup a geometry
-  // const geometry = new THREE.PlaneBufferGeometry(4, 4);
-  const geometry = new THREE.SphereBufferGeometry(1.5, 32, 32);
+  // Setup first geometry
+  const geo_01 = new THREE.SphereBufferGeometry(1.5, 32, 32);
 
-  // shader material
-  const shdrmat = new THREE.ShaderMaterial({
+  // shader material -> first geometry
+  const shdrmat_01 = new THREE.ShaderMaterial({
     extensions: {
       derivatives: "#extension GL_OES_standard_derivatives : enable",
     },
@@ -66,13 +67,35 @@ const sketch = ({ context }) => {
     },
     // wireframe: false,
     // transparent: false,
-    vertexShader: vertex,
-    fragmentShader: fragment,
+    vertexShader: vertex_01,
+    fragmentShader: fragment_01,
   });
 
-  // Setup a mesh with geometry + material
-  const mesh = new THREE.Mesh(geometry, shdrmat);
-  scene.add(mesh);
+  // Setup second geometry
+  const geo_02 = new THREE.SphereBufferGeometry(0.4, 32, 32);
+  // shader material -> second geometry
+  const shdrmat_02 = new THREE.ShaderMaterial({
+    extensions: {
+      derivatives: "#extension GL_OES_standard_derivatives : enable",
+    },
+    side: THREE.DoubleSide,
+    uniforms: {
+      // playhead: { type: "f", value: 0.0 },
+      time: { type: "f", value: 0.0 },
+      resolution: { value: new THREE.Vector4() },
+    },
+    // wireframe: false,
+    // transparent: false,
+    vertexShader: vertex_02,
+    fragmentShader: fragment_02,
+  });
+
+  // Setup a mesh with geo_01 + material
+  const mesh_01 = new THREE.Mesh(geo_01, shdrmat_01);
+  scene.add(mesh_01);
+  // Setup a mesh with geo_02 + material
+  const mesh_02 = new THREE.Mesh(geo_02, shdrmat_02);
+  scene.add(mesh_02);
 
   // draw each frame
   return {
@@ -80,15 +103,15 @@ const sketch = ({ context }) => {
     resize({ pixelRatio, viewportWidth, viewportHeight }) {
       renderer.setPixelRatio(pixelRatio);
       renderer.setSize(viewportWidth, viewportHeight, false);
-      shdrmat.uniforms.resolution.value.x = viewportWidth;
-      shdrmat.uniforms.resolution.value.y = viewportHeight;
+      shdrmat_01.uniforms.resolution.value.x = viewportWidth;
+      shdrmat_01.uniforms.resolution.value.y = viewportHeight;
       camera.aspect = viewportWidth / viewportHeight;
       camera.updateProjectionMatrix();
     },
     // Update & render your scene here
     render({ time }) {
-      shdrmat.uniforms.time.value = time * (Math.PI * 0.125);
-      // shdrmat.uniforms.time.value = time;
+      shdrmat_01.uniforms.time.value = time * (Math.PI * 0.125);
+      // shdrmat_01.uniforms.time.value = time;
       controls.update();
       renderer.render(scene, camera);
     },
