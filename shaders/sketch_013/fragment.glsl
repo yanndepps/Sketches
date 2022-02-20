@@ -1,7 +1,6 @@
 precision highp float;
 
 uniform float time;
-// uniform vec2 u_resolution;
 uniform float progress;
 uniform sampler2D texture1;
 uniform vec4 resolution;
@@ -37,6 +36,39 @@ float noise(vec3 p){
     return o4.y * d.y + o4.x * (1.0 - d.y);
 }
 
+// line function
+float lines(vec2 uv, float offset) {
+    return smoothstep(
+        0., 0.5 + offset * 0.5,
+        abs(0.5 * (sin(uv.x * 30.0) + offset * 2.0))
+);
+}
+
+// rotation matrix
+mat2 rotate2D(float angle) {
+    return mat2(
+        cos(angle), -sin(angle),
+        sin(angle), cos(angle)
+);
+}
+
 void main() {
-  gl_FragColor=vec4(vUv, 0.0, 1.0);
+  float n = noise(vPosition + time);
+
+  vec3 baseFirst = vec3(120./255., 158./255., 113./255.);
+  vec3 accent = vec3(0./255., 0./255., 0./255.);
+  vec3 baseSecond = vec3(224./255., 148./255., 66./255.);
+
+  // vec3 color1 = vec3(1., 0., 0.);
+  // vec3 color2 = vec3(0., 1., 0.);
+  // vec3 color3 = vec3(0., 0., 1.);
+
+  vec2 baseUV = rotate2D(n)*vPosition.xy*0.1;
+  float basePattern = lines(baseUV, 0.1);
+  float secondPattern = lines(baseUV, 0.5);
+
+  vec3 baseColor = mix(baseSecond, baseFirst, basePattern);
+  vec3 secondBaseColor = mix(baseColor, accent, secondPattern);
+
+  gl_FragColor=vec4(vec3(secondBaseColor), 1.0);
 }

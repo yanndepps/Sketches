@@ -2,7 +2,10 @@
  * 20.02.22 -> #1
  * Beautiful Noise with Three.js
  * Recoded -> https://www.youtube.com/watch?v=sPBb-0al7Y0
+ * 26.51
  */
+
+// devTools at 21.40
 
 global.THREE = require("three");
 require("three/examples/js/controls/OrbitControls");
@@ -18,7 +21,7 @@ const gui = new GUI();
 gui.add(document, 'title');
 
 const settings = {
-  dimensions: [640, 640],
+  dimensions: [1024, 1024],
   animate: true,
   context: "webgl",
   attributes: {
@@ -37,7 +40,7 @@ const sketch = ({ context }) => {
 
   // Setup a camera
   const camera = new THREE.PerspectiveCamera(50, 1, 0.01, 100);
-  camera.position.set(0, 0, 1.3);
+  camera.position.set(0, 0, 0.8);
   camera.lookAt(new THREE.Vector3());
 
   // Setup camera controller
@@ -48,7 +51,7 @@ const sketch = ({ context }) => {
 
   // Setup a geometry
   // const geometry = new THREE.PlaneBufferGeometry(4, 4);
-  const geometry = new THREE.SphereBufferGeometry(1, 32, 32);
+  const geometry = new THREE.SphereBufferGeometry(1.5, 32, 32);
 
   // shader material
   const shdrmat = new THREE.ShaderMaterial({
@@ -59,14 +62,10 @@ const sketch = ({ context }) => {
     uniforms: {
       // playhead: { type: "f", value: 0.0 },
       time: { type: "f", value: 0.0 },
-      resolution: { type: "v2", value: new THREE.Vector2() },
-      // colors: { type: "fv1", value: colors },
-      uvRate1: {
-        value: new THREE.Vector2(1, 1),
-      },
+      resolution: { value: new THREE.Vector4() },
     },
-    wireframe: true,
-    transparent: false,
+    // wireframe: false,
+    // transparent: false,
     vertexShader: vertex,
     fragmentShader: fragment,
   });
@@ -88,7 +87,8 @@ const sketch = ({ context }) => {
     },
     // Update & render your scene here
     render({ time }) {
-      shdrmat.uniforms.time.value = time * (Math.PI * 0.5);
+      shdrmat.uniforms.time.value = time * (Math.PI * 0.125);
+      // shdrmat.uniforms.time.value = time;
       controls.update();
       renderer.render(scene, camera);
     },
