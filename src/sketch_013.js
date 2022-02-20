@@ -1,14 +1,21 @@
 /*
- * Shader Template -> canvas-sketch + three.js
+ * 20.02.22 -> #1
+ * Beautiful Noise with Three.js
+ * Recoded -> https://www.youtube.com/watch?v=sPBb-0al7Y0
  */
 
 global.THREE = require("three");
 require("three/examples/js/controls/OrbitControls");
 
-const fragment = require("../shaders/sketch_009/fragment.glsl");
-const vertex = require("../shaders/sketch_009/vertex.glsl");
+// import * as THREE from 'three';
+// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
-const canvasSketch = require("canvas-sketch");
+import fragment from '../shaders/sketch_013/fragment.glsl';
+import vertex from '../shaders/sketch_013/vertex.glsl';
+import canvasSketch from 'canvas-sketch';
+import GUI from 'lil-gui';
+const gui = new GUI();
+gui.add(document, 'title');
 
 const settings = {
   dimensions: [640, 640],
@@ -30,7 +37,7 @@ const sketch = ({ context }) => {
 
   // Setup a camera
   const camera = new THREE.PerspectiveCamera(50, 1, 0.01, 100);
-  camera.position.set(0, 0, -4);
+  camera.position.set(0, 0, 1.3);
   camera.lookAt(new THREE.Vector3());
 
   // Setup camera controller
@@ -40,7 +47,8 @@ const sketch = ({ context }) => {
   const scene = new THREE.Scene();
 
   // Setup a geometry
-  const geometry = new THREE.PlaneBufferGeometry(4, 4);
+  // const geometry = new THREE.PlaneBufferGeometry(4, 4);
+  const geometry = new THREE.SphereBufferGeometry(1, 32, 32);
 
   // shader material
   const shdrmat = new THREE.ShaderMaterial({
@@ -51,13 +59,13 @@ const sketch = ({ context }) => {
     uniforms: {
       // playhead: { type: "f", value: 0.0 },
       time: { type: "f", value: 0.0 },
-      u_resolution: { type: "v2", value: new THREE.Vector2() },
+      resolution: { type: "v2", value: new THREE.Vector2() },
       // colors: { type: "fv1", value: colors },
       uvRate1: {
         value: new THREE.Vector2(1, 1),
       },
     },
-    wireframe: false,
+    wireframe: true,
     transparent: false,
     vertexShader: vertex,
     fragmentShader: fragment,
@@ -73,8 +81,8 @@ const sketch = ({ context }) => {
     resize({ pixelRatio, viewportWidth, viewportHeight }) {
       renderer.setPixelRatio(pixelRatio);
       renderer.setSize(viewportWidth, viewportHeight, false);
-      shdrmat.uniforms.u_resolution.value.x = viewportWidth;
-      shdrmat.uniforms.u_resolution.value.y = viewportHeight;
+      shdrmat.uniforms.resolution.value.x = viewportWidth;
+      shdrmat.uniforms.resolution.value.y = viewportHeight;
       camera.aspect = viewportWidth / viewportHeight;
       camera.updateProjectionMatrix();
     },
