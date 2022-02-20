@@ -2,10 +2,7 @@
  * 20.02.2022 -> #1
  * Beautiful Noise with Three.js
  * Recoded -> https://www.youtube.com/watch?v=sPBb-0al7Y0
- * 36.07
  */
-
-// devTools at 21.40
 
 global.THREE = require("three");
 require("three/examples/js/controls/OrbitControls");
@@ -51,9 +48,23 @@ const sketch = ({ context }) => {
   // Setup your scene
   const scene = new THREE.Scene();
 
+  // Something about tCube
+  // render our scene again but from inside our
+  // first sphere, adding true reflections
+  const cubeRenderTarget = new THREE.WebGLCubeRenderTarget(
+    256,
+    {
+      format: THREE.RGBAFormat,
+      generateMipmaps: true,
+      minFilter: THREE.LinearMipMapLinearFilter,
+      encoding: THREE.sRGBEncoding
+    }
+  );
+
+  const cubeCamera = new THREE.CubeCamera(0.1, 10, cubeRenderTarget);
+
   // Setup first geometry
   const geo_01 = new THREE.SphereBufferGeometry(1.5, 32, 32);
-
   // shader material -> first geometry
   const shdrmat_01 = new THREE.ShaderMaterial({
     extensions: {
@@ -72,7 +83,7 @@ const sketch = ({ context }) => {
   });
 
   // Setup second geometry
-  const geo_02 = new THREE.SphereBufferGeometry(0.4, 32, 32);
+  const geo_02 = new THREE.SphereBufferGeometry(0.2, 32, 32);
   // shader material -> second geometry
   const shdrmat_02 = new THREE.ShaderMaterial({
     extensions: {
@@ -82,6 +93,7 @@ const sketch = ({ context }) => {
     uniforms: {
       // playhead: { type: "f", value: 0.0 },
       time: { type: "f", value: 0.0 },
+      tCube: { value: 0.0 },
       resolution: { value: new THREE.Vector4() },
     },
     // wireframe: false,
@@ -110,8 +122,11 @@ const sketch = ({ context }) => {
     },
     // Update & render your scene here
     render({ time }) {
+      mesh_02.visible = false;
+      cubeCamera.update(renderer, scene);
+      mesh_02.visible = true;
+      shdrmat_02.uniforms.tCube.value = cubeRenderTarget.texture;
       shdrmat_01.uniforms.time.value = time * (Math.PI * 0.125);
-      // shdrmat_01.uniforms.time.value = time;
       controls.update();
       renderer.render(scene, camera);
     },
