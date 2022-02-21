@@ -6,19 +6,24 @@
 
 global.THREE = require("three");
 require("three/examples/js/controls/OrbitControls");
-
-// import * as THREE from 'three';
-// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-
+require("three/examples/js/shaders/CopyShader");
+// ---
+const canvasSketch = require('canvas-sketch');
+// ---
+const { DotScreenShader } = require('./CustomShader');
+require('three/examples/js/postprocessing/EffectComposer');
+require('three/examples/js/postprocessing/RenderPass');
+require('three/examples/js/postprocessing/ShaderPass');
+// ---
 import fragment_01 from '../shaders/sketch_013/fragment_01.glsl';
 import vertex_01 from '../shaders/sketch_013/vertex_01.glsl';
 import fragment_02 from '../shaders/sketch_013/fragment_02.glsl';
 import vertex_02 from '../shaders/sketch_013/vertex_02.glsl';
-import canvasSketch from 'canvas-sketch';
-import GUI from 'lil-gui';
-const gui = new GUI();
-gui.add(document, 'title');
-
+// ---
+// import GUI from 'lil-gui';
+// const gui = new GUI();
+// gui.add(document, 'title');
+// ---
 const settings = {
   dimensions: [1024, 1024],
   animate: true,
@@ -28,7 +33,8 @@ const settings = {
   }
 };
 
-const sketch = ({ context }) => {
+
+function sketch({ context }) {
   // Create a renderer
   const renderer = new THREE.WebGLRenderer({
     canvas: context.canvas
@@ -109,14 +115,28 @@ const sketch = ({ context }) => {
   const mesh_02 = new THREE.Mesh(geo_02, shdrmat_02);
   scene.add(mesh_02);
 
+  // Postprocessing
+  const composer = new THREE.EffectComposer(renderer);
+  const initPost = () => {
+    composer.addPass(new THREE.RenderPass(scene, camera));
+
+    const effect = new THREE.ShaderPass(DotScreenShader);
+    effect.uniforms['scale'].value = 4;
+    composer.addPass(effect);
+  };
+
+  initPost();
+
+
   // draw each frame
   return {
     // Handle resize events here
     resize({ pixelRatio, viewportWidth, viewportHeight }) {
       renderer.setPixelRatio(pixelRatio);
       renderer.setSize(viewportWidth, viewportHeight, false);
-      shdrmat_01.uniforms.resolution.value.x = viewportWidth;
-      shdrmat_01.uniforms.resolution.value.y = viewportHeight;
+      // shdrmat_01.uniforms.resolution.value.x = viewportWidth;
+      // shdrmat_01.uniforms.resolution.value.y = viewportHeight;
+      composer.setSize(viewportWidth, viewportHeight, false);
       camera.aspect = viewportWidth / viewportHeight;
       camera.updateProjectionMatrix();
     },
@@ -128,7 +148,8 @@ const sketch = ({ context }) => {
       shdrmat_02.uniforms.tCube.value = cubeRenderTarget.texture;
       shdrmat_01.uniforms.time.value = time * (Math.PI * 0.125);
       controls.update();
-      renderer.render(scene, camera);
+      // renderer.render(scene, camera);
+      composer.render(scene, camera);
     },
     // Dispose of events & renderer for cleaner hot-reloading
     unload() {
@@ -136,6 +157,6 @@ const sketch = ({ context }) => {
       renderer.dispose();
     }
   };
-};
+}
 
 canvasSketch(sketch, settings);
