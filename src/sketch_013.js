@@ -20,8 +20,8 @@ import vertex_01 from '../shaders/sketch_013/vertex_01.glsl';
 import fragment_02 from '../shaders/sketch_013/fragment_02.glsl';
 import vertex_02 from '../shaders/sketch_013/vertex_02.glsl';
 // ---
-// import GUI from 'lil-gui';
-// const gui = new GUI();
+import GUI from 'lil-gui';
+const gui = new GUI();
 // gui.add(document, 'title');
 // ---
 const settings = {
@@ -89,7 +89,7 @@ function sketch({ context }) {
   });
 
   // Setup second geometry
-  const geo_02 = new THREE.SphereBufferGeometry(0.2, 32, 32);
+  const geo_02 = new THREE.SphereBufferGeometry(0.2, 64, 64);
   // shader material -> second geometry
   const shdrmat_02 = new THREE.ShaderMaterial({
     extensions: {
@@ -100,6 +100,10 @@ function sketch({ context }) {
       // playhead: { type: "f", value: 0.0 },
       time: { type: "f", value: 0.0 },
       tCube: { value: 0.0 },
+      mRefractionRatio: { value: 1.02 },
+      mFresnelBias: { value: 0.1 },
+      mFresnelScale: { value: 4. },
+      mFresnelPower: { value: 2. },
       resolution: { value: new THREE.Vector4() },
     },
     // wireframe: false,
@@ -127,6 +131,26 @@ function sketch({ context }) {
 
   initPost();
 
+  // GUI
+  let obj = {
+    mRefractionRatio: 1.02,
+    mFresnelBias: 0.1,
+    mFresnelScale: 4.0,
+    mFresnelPower: 2.0,
+  }
+
+  gui.add(obj, 'mRefractionRatio', 0, 1.5, 0.01).onChange(v => {
+    shdrmat_02.uniforms.mRefractionRatio.value = v;
+  });
+  gui.add(obj, 'mFresnelBias', 0, 1, 0.01).onChange(v => {
+    shdrmat_02.uniforms.mFresnelBias.value = v;
+  });
+  gui.add(obj, 'mFresnelScale', 0, 4, 0.01).onChange(v => {
+    shdrmat_02.uniforms.mFresnelScale.value = v;
+  });
+  gui.add(obj, 'mFresnelPower', 1, 3, 0.01).onChange(v => {
+    shdrmat_02.uniforms.mFresnelPower.value = v;
+  });
 
   // draw each frame
   return {

@@ -9,12 +9,12 @@ varying vec3 vReflect;
 varying vec3 vRefract[3];
 varying float vReflectionFactor;
 
-void main() {
+uniform float mRefractionRatio;
+uniform float mFresnelBias;
+uniform float mFresnelScale;
+uniform float mFresnelPower;
 
-float mRefractionRatio = 1.02;
-float mFresnelBias = 0.1;
-float mFresnelScale = 4.0;
-float mFresnelPower = 2.0;
+void main() {
 
 vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
 vec4 worldPosition = modelMatrix * vec4( position, 1.0 );
@@ -32,9 +32,3 @@ vReflectionFactor = mFresnelBias + mFresnelScale * pow( 1.0 + dot( normalize( I 
 gl_Position = projectionMatrix * mvPosition;
 
 }
-
-// void main(){
-//   vUv = uv;
-//   vPosition = position;
-//   gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);
-// }

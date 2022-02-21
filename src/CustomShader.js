@@ -1,6 +1,7 @@
-// import {
-//     Vector2
-// } from 'three';
+/*
+ * used in :
+ * sketch_013
+ */
 
 global.THREE = require('three');
 
