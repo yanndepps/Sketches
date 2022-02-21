@@ -10,7 +10,7 @@ require("three/examples/js/shaders/CopyShader");
 // ---
 const canvasSketch = require('canvas-sketch');
 // ---
-const { DotScreenShader } = require('./CustomShader');
+const { DotScreenShader } = require('../shaders/sketch_013/CustomShader');
 require('three/examples/js/postprocessing/EffectComposer');
 require('three/examples/js/postprocessing/RenderPass');
 require('three/examples/js/postprocessing/ShaderPass');
