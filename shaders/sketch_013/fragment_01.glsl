@@ -7,6 +7,10 @@ uniform vec4 resolution;
 varying vec2 vUv;
 varying vec3 vPosition;
 
+uniform float baseUVOffset; // 0.1
+uniform float basePatternOffset; // 0.5
+uniform float secondPatternOffset; // 0.1
+
 #define PI 3.14159265359
 
 // noise function
@@ -60,9 +64,9 @@ void main() {
   vec3 baseSecond = vec3(224./255., 148./255., 66./255.);
   vec3 baseThird = vec3(232./255., 201./255., 73./255.);
 
-  vec2 baseUV = rotate2D(n)*vPosition.xy*0.1; // 0.1
-  float basePattern = lines(baseUV, 0.5); // 0.5
-  float secondPattern = lines(baseUV, 0.1); // 0.1
+  vec2 baseUV = rotate2D(n)*vPosition.xy*baseUVOffset; // 0.1
+  float basePattern = lines(baseUV, basePatternOffset); // 0.5
+  float secondPattern = lines(baseUV, secondPatternOffset); // 0.1
 
   vec3 baseColor = mix(baseThird, baseFirst, basePattern);
   vec3 secondBaseColor = mix(baseColor, accent, secondPattern);

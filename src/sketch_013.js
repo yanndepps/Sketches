@@ -1,5 +1,5 @@
 /*
- * 20.02.2022 -> #1
+ * akella : 20.02.2022 -> #1
  * Beautiful Noise with Three.js
  * Recoded -> https://www.youtube.com/watch?v=sPBb-0al7Y0
  */
@@ -80,6 +80,9 @@ function sketch({ context }) {
     uniforms: {
       // playhead: { type: "f", value: 0.0 },
       time: { type: "f", value: 0.0 },
+      baseUVOffset: { value: 0.1 },
+      basePatternOffset: { value: 0.5 },
+      secondPatternOffset: { value: 0.1 },
       resolution: { value: new THREE.Vector4() },
     },
     // wireframe: false,
@@ -137,8 +140,12 @@ function sketch({ context }) {
     mFresnelBias: 0.1,
     mFresnelScale: 4.0,
     mFresnelPower: 2.0,
+    baseUVOffset: 0.1,
+    basePatternOffset: 0.5,
+    secondPatternOffset: 0.1,
   }
 
+  // panel 01 -> fragment 02
   gui.add(obj, 'mRefractionRatio', 0, 1.5, 0.01).onChange(v => {
     shdrmat_02.uniforms.mRefractionRatio.value = v;
   });
@@ -150,6 +157,16 @@ function sketch({ context }) {
   });
   gui.add(obj, 'mFresnelPower', 1, 3, 0.01).onChange(v => {
     shdrmat_02.uniforms.mFresnelPower.value = v;
+  });
+  // panel 02 -> fragment 01
+  gui.add(obj, 'baseUVOffset', 0, 1, 0.01).onChange(v => {
+    shdrmat_01.uniforms.baseUVOffset.value = v;
+  });
+  gui.add(obj, 'basePatternOffset', 0, 1, 0.01).onChange(v => {
+    shdrmat_01.uniforms.basePatternOffset.value = v;
+  });
+  gui.add(obj, 'secondPatternOffset', 0, 1, 0.01).onChange(v => {
+    shdrmat_01.uniforms.secondPatternOffset.value = v;
   });
 
   // draw each frame
