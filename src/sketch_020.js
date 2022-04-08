@@ -1,31 +1,6 @@
 const canvasSketch = require('canvas-sketch');
 const Hydra = require('hydra-synth');
 
-// utility functions
-function random(min, max) {
-  let rand = Math.random();
-  if (typeof min === "undefined") {
-    return rand;
-  } else if (typeof max === "undefined") {
-    if (min instanceof Array) {
-      return min[Math.floor(rand * min.length)];
-    } else {
-      return rand * min;
-    }
-  } else {
-    if (min > max) {
-      const tmp = min;
-      min = max;
-      max = tmp;
-    }
-    return rand * (max - min) + min;
-  }
-}
-
-function map(current, in_min, in_max, out_min, out_max) {
-  return (current - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-}
-
 const settings = {
   dimensions: [1024, 1024],
   context: 'webgl',
