@@ -1,7 +1,11 @@
+/*
+ * Coding Challenge #166
+ * ASCII
+ */
+
 const canvasSketch = require('canvas-sketch');
 const p5 = require('p5');
-// new (p5);
-
+// -> 18.29
 // const density = " ._▂▃▄abcde▀▀▅▆▇░░▒▓█░";
 // const density = " ._▂▃▄▀▀▅▆▇░░▒▓█░";
 const density = " ▐░▒▓▔▔▊▋▌▍▎▏";
