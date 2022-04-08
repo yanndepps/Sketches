@@ -1,4 +1,6 @@
 const canvasSketch = require('canvas-sketch');
+const Random = require('canvas-sketch-util/random');
+const { mapRange } = require('canvas-sketch-util/math');
 const Hydra = require('hydra-synth');
 
 const settings = {
@@ -20,7 +22,7 @@ const sketch = (initialProps) => {
   });
   // console.log(hydra);
 
-  // sketch
+  // hydra sketch
   osc(9, 2, 2) // 80, 2, 2
     .modulateRotate(osc(5, 1))
     .out();
