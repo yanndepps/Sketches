@@ -1,3 +1,8 @@
+/*
+ * Hydra-Synth 01
+ * Template
+ */
+
 const canvasSketch = require('canvas-sketch');
 const Random = require('canvas-sketch-util/random');
 const { mapRange } = require('canvas-sketch-util/math');
