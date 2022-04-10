@@ -3,7 +3,6 @@
  * recoded
  * © sableraph
  * https://www.twitch.tv/sableraph
- * 2.25.11
  */
 
 const canvasSketch = require('canvas-sketch');

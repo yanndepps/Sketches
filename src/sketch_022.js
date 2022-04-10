@@ -34,8 +34,8 @@ const sketch = () => {
 
 function separateGrid(x, y, w, minW) {
   let step = int(random(2, 5));
-  let d = round(w / step);
-  console.log('d -> ', d);
+  let d = ceil(w / step);
+  // console.log('d -> ', d);
   for (let j = 0; j < step; j++) {
     for (let i = 0; i < step; i++) {
       let x2 = x + i * d;
@@ -54,7 +54,8 @@ function drawShapes(cx, cy, d) {
   translate(cx, cy);
   rotate(int(random(4)) * 360 / 4);
   // rotate([0, 90, 180, 270]);
-  arc(-d / 2, -d / 2, d * 2, d * 2, 0, 90, PIE);
+  // arc(-d / 2, -d / 2, d * 2, d * 2, 0, 90, PIE);
+  triangle(-d / 2, -d / 2, -d / 2, d / 2, d / 2, -d / 2);
   pop();
 }
 
