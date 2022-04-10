@@ -2,6 +2,7 @@
  * Live Coding Session 012
  * © shunsuke takawo
  * Recoded
+ * TODO: seed -> githash suffix
  */
 
 const canvasSketch = require('canvas-sketch');
@@ -34,21 +35,39 @@ let palette = rnd.shuffle(rnd.pick(palettes)).slice(0, nColor);
 
 const sketch = () => {
   colorMode(HSB, 360, 100, 100, 100);
-  noStroke();
+  // noStroke();
   // stroke(0, 0, 20, 100);
   // strokeWeight(0.25);
   smooth(2);
   // ---
-  return ({ width, height }) => {
-    background(palette[0]);
-    // background(0, 0, 20, 100);
+  return ({ width, context }) => {
     angleMode(DEGREES);
+    // ---
+    // background(palette[0]);
+    // stroke(palette[0]);
+    // strokeWeight(0.5);
+    // background(0, 0, 20, 100);
+    // ---
+    let gradient = context.createLinearGradient(0, 0, 0, height);
+    noStroke();
+    gradient.addColorStop(0, palette[0]);
+    gradient.addColorStop(0.33, palette[1]);
+    context.fillStyle = gradient;
+    rect(0, 0, width, height);
+    // ---
+    blendMode(ADD);
+    background(0, 0, 30, 30);
+    blendMode(BLEND);
     // ---
     let offset = width / 15;
     let x = offset;
     let y = offset;
     let w = width - offset * 2;
-    let minW = w / 5;
+    let minW = w / 2;
+    // ---
+    stroke(0, 0, 30, 100);
+    context.shadowColor = color(0, 0, 0, 20);
+    context.shadowBlur = offset / 3;
     // ---
     separateGrid(x, y, w, minW);
   };
