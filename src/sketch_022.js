@@ -5,9 +5,9 @@
  */
 
 const canvasSketch = require('canvas-sketch');
-const palettes = require('nice-color-palettes/1000.json');
-const rnd = require('canvas-sketch-util/random');
-const { lerp } = require('canvas-sketch-util/math');
+// const palettes = require('nice-color-palettes/1000.json');
+// const rnd = require('canvas-sketch-util/random');
+// const { lerp } = require('canvas-sketch-util/math');
 const p5 = require('p5');
 new p5();
 
@@ -19,23 +19,29 @@ const settings = {
   animate: false
 };
 
-const nColor = rnd.rangeFloor(2, 6);
-const palette = rnd.shuffle(rnd.pick(palettes)).slice(0, nColor);
+// let nColor = rnd.rangeFloor(2, 6);
+// let palette = rnd.shuffle(rnd.pick(palettes)).slice(0, nColor);
+// console.log(palette);
+// let color = rnd.pick(palette);
+let palette = ["#f94144",
+  "#f3722c",
+  "#f8961e",
+  "#f9c74f",
+  "#f9844a",
+  "#90be6d",
+  "#43aa8b",
+  "#4d908e",
+  "#577790",
+  "#277da1"];
 
-const sketch = () => {
-  // colorMode(HSB, 360, 100, 100);
-  // stroke(0, 0, 30);
-  angleMode(DEGREES);
-  // noStroke();
-  // ---
-  // console.log(color);
-  // console.log(palette);
+const sketch = (initialProps) => {
+  console.log(initialProps);
+  colorMode(HSB, 360, 100, 100, 100);
   // ---
   return ({ width, height }) => {
-    // background(0, 0, 30);
-    background(palette[0]);
-    let color = rnd.pick(palette);
-    noLoop();
+    // background(palette[0]);
+    background(0, 0, 20, 100);
+    angleMode(DEGREES);
     // ---
     let offset = width / 15;
     let x = offset;
@@ -43,12 +49,11 @@ const sketch = () => {
     let w = width - offset * 2;
     let minW = w / 5;
     // ---
-    separateGrid(x, y, w, minW, color);
+    separateGrid(x, y, w, minW);
   };
 };
 
-function separateGrid(x, y, w, minW, cl) {
-  fill(cl);
+function separateGrid(x, y, w, minW) {
   let step = int(random(1, 5));
   let d = round(w / step);
   // console.log('d -> ', d);
@@ -57,16 +62,15 @@ function separateGrid(x, y, w, minW, cl) {
       let x2 = x + i * d;
       let y2 = y + j * d;
       if (random() < 0.9 && d > minW) {
-        separateGrid(x2, y2, d, minW, cl);
+        separateGrid(x2, y2, d, minW);
       } else {
-        drawShapes(x2 + d / 2, y2 + d / 2, d, cl);
+        drawShapes(x2 + d / 2, y2 + d / 2, d);
       }
     }
   }
 }
 
-function drawShapes(cx, cy, d, cl) {
-  fill(cl);
+function drawShapes(cx, cy, d) {
   push();
   translate(cx, cy);
   // scale(random() > 0.5 ? -1 : 1, random() > 0.5 ? -1 : 1);
@@ -80,20 +84,33 @@ function drawShapes(cx, cy, d, cl) {
       separateCircle(0, 0, d, random([2, 4]));
       break;
     case 1:
-      separateArc(-d / 2, 0, d, d, -90, -90 + 180, PIE, 2);
-      separateArc(+d / 2, 0, d, d, 90, 90 + 180, PIE, 2);
+      push();
+      translate(-d / 2, 0);
+      rotate(-90);
+      separateArc(0, 0, d, d, 0, 180, PIE, 2);
+      pop();
+      // ---
+      push();
+      translate(d / 2, 0);
+      rotate(90);
+      separateArc(0, 0, d, d, 0, 180, PIE, 2);
+      pop();
       break;
     case 2:
       push();
       translate(-d / 2 / 2, 0);
       scale(random() > 0.5 ? -1 : 1, 1);
-      separateArc(-d / 2 / 2, 0, d, d, -90, -90 + 180, PIE, 2);
+      translate(-d / 2 / 2, 0);
+      rotate(-90);
+      separateArc(0, 0, d, d, 0, 180, PIE, 2);
       pop();
       // ---
       push();
-      translate(+d / 2 / 2, 0);
+      translate(d / 2 / 2, 0);
       scale(random() > 0.5 ? -1 : 1, 1);
-      separateArc(-d / 2 / 2, 0, d, d, -90, -90 + 180, PIE, 2);
+      translate(-d / 2 / 2, 0);
+      rotate(-90);
+      separateArc(0, 0, d, d, 0, 180, PIE, 2);
       pop();
       break;
     case 3:
@@ -102,7 +119,9 @@ function drawShapes(cx, cy, d, cl) {
         rotate(i * 360 / 4);
         translate(-d / 2 / 2, -d / 2 / 2);
         rotate(int(random(4)) * 360 / 4);
-        arc(-d / 2 / 2, -d / 2 / 2, d, d, 0, 90, PIE);
+        translate(-d / 2 / 2, -d / 2 / 2);
+        setConicGradient(0, 0, 0, shuffle(palette.concat()));
+        arc(0, 0, d, d, 0, 90, PIE);
         pop();
       }
       break;
@@ -115,9 +134,13 @@ function separateCircle(x, y, d, step) {
   translate(x, y);
   circle(0, 0, d);
   // ---
-  let angle = 360 / step;
+  let angleStep = 360 / step;
   for (let i = 0; i < step; i++) {
-    arc(0, 0, d, d, i * angle, (i + 1) * angle, PIE);
+    push();
+    rotate(i * angleStep);
+    setConicGradient(0, 0, 0, shuffle(palette.concat()));
+    arc(0, 0, d, d, 0, angleStep, PIE);
+    pop();
   }
   pop();
 }
@@ -127,9 +150,18 @@ function separateArc(x, y, w, h, startAngle, endAngle, type, step) {
   translate(x, y);
   let angleStep = (endAngle - startAngle) / step;
   for (let i = 0; i < step; i++) {
+    // rotate(startAngle + i * angleStep);
+    setConicGradient(0, 0, 0, shuffle(palette.concat()));
     arc(0, 0, w, h, startAngle + i * angleStep, startAngle + (i + 1) * angleStep, type);
   }
   pop();
+}
+
+function setConicGradient(angle, x, y, palette) {
+  let gradient = drawingContext.createConicGradient(angle, x, y);
+  gradient.addColorStop(0, palette[0]);
+  gradient.addColorStop(1 / 2, palette[1]);
+  drawingContext.fillStyle = gradient;
 }
 
 canvasSketch(sketch, settings);
