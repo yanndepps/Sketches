@@ -19,14 +19,14 @@ const sketch = () => {
   colorMode(HSB, 360, 100, 100);
   angleMode(DEGREES);
   return ({ width, height }) => {
-    background(0, 0, 80);
+    background(0, 0, 60);
     noLoop();
     // ---
     let offset = width / 15;
     let x = offset;
     let y = offset;
     let w = width - offset * 2;
-    let minW = w / 5;
+    let minW = w / 10;
     // ---
     separateGrid(x, y, w, minW);
   };
@@ -34,7 +34,8 @@ const sketch = () => {
 
 function separateGrid(x, y, w, minW) {
   let step = int(random(2, 5));
-  let d = w / step;
+  let d = round(w / step);
+  console.log('d -> ', d);
   for (let j = 0; j < step; j++) {
     for (let i = 0; i < step; i++) {
       let x2 = x + i * d;
@@ -42,18 +43,19 @@ function separateGrid(x, y, w, minW) {
       if (random() < 0.9 && d > minW) {
         separateGrid(x2, y2, d, minW);
       } else {
-        if (random() > 0.5) {
-          line(x2, y2, x2 + d, y2 + d);
-          strokeWeight(1);
-        } else {
-          line(x2 + d, y2, x2, y2 + d);
-          strokeWeight(2);
-        }
-        // noFill();
-        // rect(x2, y2, d, d);
+        drawShapes(x2 + d / 2, y2 + d / 2, d);
       }
     }
   }
+}
+
+function drawShapes(cx, cy, d) {
+  push();
+  translate(cx, cy);
+  rotate(int(random(4)) * 360 / 4);
+  // rotate([0, 90, 180, 270]);
+  arc(-d / 2, -d / 2, d * 2, d * 2, 0, 90, PIE);
+  pop();
 }
 
 canvasSketch(sketch, settings);
