@@ -36,7 +36,7 @@ const sketch = () => {
     randomSeed(seed);
     console.log(seed);
     colorMode(HSB, 360, 100, 100, 100);
-    palette = shuffle(tome.get("tundra4").colors);
+    palette = shuffle(tome.get("hilda05").colors);
     angleMode(DEGREES);
     // ---
     // background(palette[0]);
@@ -57,7 +57,7 @@ const sketch = () => {
     background(0, 0, 30, 30);
     blendMode(BLEND);
     // ---
-    let offset = width / 5;
+    let offset = width / 12;
     let x = offset;
     let y = offset;
     let w = width - offset * 2;
