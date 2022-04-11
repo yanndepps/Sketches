@@ -32,11 +32,11 @@ const sketch = () => {
   // console.log(palette.length);
   // console.log(colStr);
   // ---
-  return ({ width, context }) => {
+  return ({ width, height, context }) => {
     randomSeed(seed);
     console.log(seed);
     colorMode(HSB, 360, 100, 100, 100);
-    palette = shuffle(tome.get("rag-bangalore").colors);
+    palette = shuffle(tome.get("tundra4").colors);
     angleMode(DEGREES);
     // ---
     // background(palette[0]);
@@ -57,7 +57,7 @@ const sketch = () => {
     background(0, 0, 30, 30);
     blendMode(BLEND);
     // ---
-    let offset = width / 15;
+    let offset = width / 5;
     let x = offset;
     let y = offset;
     let w = width - offset * 2;
