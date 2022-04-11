@@ -2,19 +2,33 @@
  * Live Coding Session 012
  * © shunsuke takawo
  * Recoded
+ * Chromotome color palettes
  */
 
 const canvasSketch = require('canvas-sketch');
-const palettes = require('nice-color-palettes/1000.json');
+const tome = require('chromotome');
 const rnd = require('canvas-sketch-util/random');
 const p5 = require('p5');
 new p5();
 
-const seed = 'takawo_012_060822';
+const seed = 'takawo_012_041122';
 rnd.setSeed(seed);
+let palette = [];
 
-let nColor = rnd.rangeFloor(2, 11);
-let palette = rnd.shuffle(rnd.pick(palettes)).slice(0, nColor);
+// let nColor = rnd.rangeFloor(2, 11);
+// let palette = rnd.shuffle(rnd.pick(palettes)).slice(0, nColor);
+
+// chromotome palettes can be acquired randomly
+// let palette = tome.get();
+// or by name (console.log(tome.getNames()))
+// console.log(tome.getNames());
+
+// A palette consists of an array of colors together
+// with (usually) a stroke color and a background color.
+// console.log(palette.colors);
+// console.log(palette.stroke);
+// console.log(palette.background);
+// console.log(palette.colors[1]);
 
 const settings = {
   p5: true,
@@ -26,6 +40,10 @@ const settings = {
 
 const sketch = () => {
   colorMode(HSB, 360, 100, 100, 100);
+  palette = shuffle(tome.get("rag-bangalore").colors);
+  // let colStr = tome.get("miradors").stroke;
+  // console.log(palette.length);
+  // console.log(colStr);
   // ---
   return ({ width, context }) => {
     angleMode(DEGREES);
@@ -35,10 +53,12 @@ const sketch = () => {
     // strokeWeight(0.5);
     // background(0, 0, 20, 100);
     // ---
+    shuffle(palette, true);
+    // ---
     let gradient = context.createLinearGradient(0, 0, 0, height);
     noStroke();
     gradient.addColorStop(0, palette[0]);
-    gradient.addColorStop(0.33, palette[1]);
+    gradient.addColorStop(0.35, palette[1]);
     context.fillStyle = gradient;
     rect(0, 0, width, height);
     // ---
@@ -155,7 +175,6 @@ function separateArc(x, y, w, h, startAngle, endAngle, type, step) {
   translate(x, y);
   let angleStep = (endAngle - startAngle) / step;
   for (let i = 0; i < step; i++) {
-    // rotate(startAngle + i * angleStep);
     setConicGradient(0, 0, 0, shuffle(palette.concat()));
     arc(0, 0, w, h, startAngle + i * angleStep, startAngle + (i + 1) * angleStep, type);
   }
@@ -163,9 +182,10 @@ function separateArc(x, y, w, h, startAngle, endAngle, type, step) {
 }
 
 function setConicGradient(angle, x, y, palette) {
+  let colors = shuffle(palette.concat());
   let gradient = drawingContext.createConicGradient(angle, x, y);
-  gradient.addColorStop(0, palette[0]);
-  gradient.addColorStop(0.8, palette[1]);
+  gradient.addColorStop(0, colors[0]);
+  gradient.addColorStop(0.8, colors[1]);
   drawingContext.fillStyle = gradient;
 }
 
