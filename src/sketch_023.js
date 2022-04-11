@@ -3,49 +3,40 @@
  * © shunsuke takawo
  * Recoded
  * Chromotome color palettes
+ * https://kgolid.github.io/chromotome-site/
  */
 
 const canvasSketch = require('canvas-sketch');
 const tome = require('chromotome');
-const rnd = require('canvas-sketch-util/random');
 const p5 = require('p5');
 new p5();
 
-const seed = 'takawo_012_041122';
-rnd.setSeed(seed);
 let palette = [];
-
-// let nColor = rnd.rangeFloor(2, 11);
-// let palette = rnd.shuffle(rnd.pick(palettes)).slice(0, nColor);
-
-// chromotome palettes can be acquired randomly
-// let palette = tome.get();
-// or by name (console.log(tome.getNames()))
-// console.log(tome.getNames());
-
-// A palette consists of an array of colors together
-// with (usually) a stroke color and a background color.
-// console.log(palette.colors);
-// console.log(palette.stroke);
-// console.log(palette.background);
-// console.log(palette.colors[1]);
+let seed = Math.floor(Math.random() * 1000);
 
 const settings = {
+  suffix: seed,
   p5: true,
-  suffix: rnd.getSeed(seed),
   dimensions: [1024, 1024],
   context: '2d',
-  animate: false
+  animate: false,
+  attributes: {
+    antialias: true
+  }
 };
 
+
 const sketch = () => {
-  colorMode(HSB, 360, 100, 100, 100);
-  palette = shuffle(tome.get("rag-bangalore").colors);
+  smooth(6);
   // let colStr = tome.get("miradors").stroke;
   // console.log(palette.length);
   // console.log(colStr);
   // ---
   return ({ width, context }) => {
+    randomSeed(seed);
+    console.log(seed);
+    colorMode(HSB, 360, 100, 100, 100);
+    palette = shuffle(tome.get("rag-bangalore").colors);
     angleMode(DEGREES);
     // ---
     // background(palette[0]);

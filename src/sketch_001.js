@@ -15,12 +15,12 @@ const scale = 1;
 const debug = false;
 const trace = true;
 
-const seed = 'flow_fields_072421';
+const seed = 'flow_fields_041222';
 Random.setSeed(seed);
 
 const settings = {
   suffix: Random.getSeed(seed),
-  dimensions: [ 595 * scale, 842 * scale ], // 600x600
+  dimensions: [595 * scale, 842 * scale], // 600x600
   scaleToView: false,
   animate: true,
   duration: 12,
@@ -42,7 +42,7 @@ const sketch = () => {
   // more color choices and randomness
   const colorCount = Random.rangeFloor(2, 6);
   const palette = Random.shuffle(Random.pick(palettes))
-                        .slice(0, colorCount);
+    .slice(0, colorCount);
 
   // const seed = 'depps_flow_fields';
   // Random.setSeed(seed);
@@ -77,8 +77,8 @@ const sketch = () => {
 
       const margin = 0.03 * width;
       const clipBox = [
-        [ margin, margin ],
-        [ width - margin, height - margin ],
+        [margin, margin],
+        [width - margin, height - margin],
       ];
 
       if (debug) {
