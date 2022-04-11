@@ -2,43 +2,30 @@
  * Live Coding Session 012
  * © shunsuke takawo
  * Recoded
- * TODO: seed -> githash suffix
  */
 
 const canvasSketch = require('canvas-sketch');
 const palettes = require('nice-color-palettes/1000.json');
 const rnd = require('canvas-sketch-util/random');
-// const { lerp } = require('canvas-sketch-util/math');
 const p5 = require('p5');
 new p5();
 
+const seed = 'takawo_012_110422';
+rnd.setSeed(seed);
+
+let nColor = rnd.rangeFloor(2, 11);
+let palette = rnd.shuffle(rnd.pick(palettes)).slice(0, nColor);
+
 const settings = {
   p5: true,
+  suffix: rnd.getSeed(seed),
   dimensions: [1024, 1024],
   context: '2d',
   animate: false
 };
 
-let nColor = rnd.rangeFloor(2, 11);
-let palette = rnd.shuffle(rnd.pick(palettes)).slice(0, nColor);
-// let color = rnd.pick(palette);
-// let palette = ["#f94144",
-//   "#f3722c",
-//   "#f8961e",
-//   "#f9c74f",
-//   "#f9844a",
-//   "#90be6d",
-//   "#43aa8b",
-//   "#4d908e",
-//   "#577790",
-//   "#277da1"];
-
 const sketch = () => {
   colorMode(HSB, 360, 100, 100, 100);
-  // noStroke();
-  // stroke(0, 0, 20, 100);
-  // strokeWeight(0.25);
-  smooth(2);
   // ---
   return ({ width, context }) => {
     angleMode(DEGREES);
@@ -94,10 +81,7 @@ function separateGrid(x, y, w, minW) {
 function drawShapes(cx, cy, d) {
   push();
   translate(cx, cy);
-  // scale(random() > 0.5 ? -1 : 1, random() > 0.5 ? -1 : 1);
   rotate(int(random(4)) * 360 / 4);
-  // rotate -> [ 0, 90, 180, 270 ]
-  // triangle(-d / 2, -d / 2, -d / 2, d / 2, d / 2, -d / 2);
 
   let shapeNum = int(random(4));
   switch (shapeNum) {
