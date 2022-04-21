@@ -1,3 +1,6 @@
+/*
+ * Grid of Squares
+ */
 const canvasSketch = require('canvas-sketch');
 const rndm = require('canvas-sketch-util/random');
 

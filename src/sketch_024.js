@@ -3,6 +3,7 @@
  * © shunsuke takawo
  * Recoded
  * Riso color palettes
+ * TODO: array of colors
  */
 
 const canvasSketch = require('canvas-sketch');
