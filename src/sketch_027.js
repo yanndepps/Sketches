@@ -1,6 +1,5 @@
 /*
  * The Art of Code -> ep_003 : smiley
- * 17.59
  */
 
 global.THREE = require("three");
