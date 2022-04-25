@@ -1,5 +1,6 @@
 /*
  * The Art of Code -> Falling Heart FX
+ * 7.47
  */
 
 global.THREE = require("three");
@@ -24,6 +25,7 @@ const sketch = ({ context }) => {
   const renderer = new THREE.WebGLRenderer({
     canvas: context.canvas
   });
+
 
   // WebGL background color
   renderer.setClearColor("#000", 1);
@@ -52,6 +54,7 @@ const sketch = ({ context }) => {
       // playhead: { type: "f", value: 0.0 },
       time: { type: "f", value: 0.0 },
       u_resolution: { type: "v2", value: new THREE.Vector2() },
+      u_mouse: { type: "V2", value: new THREE.Vector2() },
       // colors: { type: "fv1", value: colors },
       uvRate1: {
         value: new THREE.Vector2(1, 1),
@@ -79,8 +82,14 @@ const sketch = ({ context }) => {
       camera.updateProjectionMatrix();
     },
     // Update & render your scene here
-    render({ time }) {
+    render({ time, viewportWidth, viewportHeight }) {
       shdrmat.uniforms.time.value = time * (Math.PI * 0.5);
+      document.onmousemove = function(e) {
+        shdrmat.uniforms.u_mouse.value.x = (e.clientX / viewportWidth) * 2 - 1;
+        shdrmat.uniforms.u_mouse.value.y = ((e.clientY / viewportHeight) * 2 + 1) * 200;
+        // console.log("x -> ", shdrmat.uniforms.u_mouse.value.x);
+        // console.log("y -> ", shdrmat.uniforms.u_mouse.value.y);
+      }
       controls.update();
       renderer.render(scene, camera);
     },
