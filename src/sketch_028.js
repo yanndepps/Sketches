@@ -1,6 +1,5 @@
 /*
  * The Art of Code -> Falling Heart FX
- * 7.47
  */
 
 global.THREE = require("three");
@@ -86,7 +85,7 @@ const sketch = ({ context }) => {
       shdrmat.uniforms.time.value = time * (Math.PI * 0.5);
       document.onmousemove = function(e) {
         shdrmat.uniforms.u_mouse.value.x = (e.clientX / viewportWidth) * 2 - 1;
-        shdrmat.uniforms.u_mouse.value.y = ((e.clientY / viewportHeight) * 2 + 1) * 200;
+        shdrmat.uniforms.u_mouse.value.y = ((e.clientY / viewportHeight) * 2 + 1) * 100;
         // console.log("x -> ", shdrmat.uniforms.u_mouse.value.x);
         // console.log("y -> ", shdrmat.uniforms.u_mouse.value.y);
       }
