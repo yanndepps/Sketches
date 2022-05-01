@@ -10,7 +10,7 @@ const rnd = require('canvas-sketch-util/random');
 const p5 = require('p5');
 new p5();
 
-const seed = 'takawo_015_050122_l';
+const seed = '231415';
 rnd.setSeed(seed);
 
 let nColor = rnd.rangeFloor(2, 7);
@@ -19,17 +19,20 @@ let palette = rnd.shuffle(rnd.pick(palettes)).slice(0, nColor);
 const settings = {
   p5: true,
   suffix: rnd.getSeed(seed),
-  dimensions: [1024, 1024],
+  // dimensions: [1024, 1024],
+  dimensions: 'A4',
+  orientation: 'portrait',
   context: '2d',
   animate: false
 };
 
 let myShapes = [];
-let shapeNum = 50;
+let shapeNum = 25;
 
 const sketch = ({ width, height }) => {
   colorMode(HSB, 360, 100, 100, 100);
   angleMode(DEGREES);
+  randomSeed(seed);
   // ---
   for (let i = 0; i < palette.length; i++) {
     let col = color(palette[i]);
@@ -44,7 +47,7 @@ const sketch = ({ width, height }) => {
     let r = random(rMax / 2 - d);
     let x = width / 2 + cos(angle) * r;
     let y = height / 2 + sin(angle) * r;
-    let detail = 50;
+    let detail = 180;
     let col = random(palette);
     let myShape = new MyShape(x, y, d / 2, detail, col);
     myShapes.push(myShape);
@@ -86,6 +89,8 @@ const sketch = ({ width, height }) => {
     background(palette[0]);
     context.shadowColor = color(0, 0, 0, 33);
     context.shadowBlur = width / 15;
+    // context.shadowOffsetX = width / 15 / 2;
+    // context.shadowOffsetY = height / 15 / 2;
     image(g, 0, 0);
   };
 };
