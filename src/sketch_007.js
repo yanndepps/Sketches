@@ -8,7 +8,7 @@ const mth = require('canvas-sketch-util/math');
 const Tweakpane = require('tweakpane');
 
 const settings = {
-  dimensions: [1080, 1080],
+  dimensions: [512, 512],
   animate: true
 };
 

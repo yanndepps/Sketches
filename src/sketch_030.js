@@ -11,35 +11,39 @@ const rnd = require('canvas-sketch-util/random');
 const p5 = require('p5');
 new p5();
 
-const seed = '080643';
+// const seed = '383273';
+const seed = rnd.getRandomSeed();
 rnd.setSeed(seed);
+console.log('seed -> ', seed);
 
-let nColor = rnd.rangeFloor(2, 7);
+// let nColor = rnd.rangeFloor(2, 7);
 let palette = [];
 
 const settings = {
   p5: true,
   suffix: rnd.getSeed(seed),
   // dimensions: [1024, 1024],
-  dimensions: 'A4',
-  orientation: 'portrait',
+  dimensions: [512, 512],
+  // dimensions: 'A4',
+  // orientation: 'portrait',
   context: '2d',
   animate: false
 };
 
 let myShapes = [];
-let shapeNum = 25;
+let shapeNum = 30;
 
 const sketch = ({ width, height }) => {
   colorMode(HSB, 360, 100, 100, 100);
   angleMode(DEGREES);
   randomSeed(seed);
   // ---
-  palette = shuffle(tome.get("kaffeprat").colors);
-  print('colors -> ', palette);
+  palette = shuffle(tome.get("dt03").colors);
+  // palette = shuffle(tome.get("dt06").colors);
+  // print('colors -> ', palette);
   for (let i = 0; i < palette.length; i++) {
     let col = color(palette[i]);
-    col.setAlpha(30);
+    col.setAlpha(10); // 30
     palette[i] = col;
   }
   // ---

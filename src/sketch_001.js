@@ -15,12 +15,15 @@ const scale = 1;
 const debug = false;
 const trace = true;
 
-const seed = 'flow_fields_041222';
+// const seed = '399896';
+const seed = Random.getRandomSeed();
 Random.setSeed(seed);
+console.log('seed -> ', seed);
 
 const settings = {
   suffix: Random.getSeed(seed),
-  dimensions: [595 * scale, 842 * scale], // 600x600
+  // dimensions: [595 * scale, 842 * scale], // 600x600
+  dimensions: [512 * scale, 512 * scale], // 600x600
   scaleToView: false,
   animate: true,
   duration: 12,
@@ -39,6 +42,8 @@ const STEP = 5 * scale;
 const PARTICLE_STEPS = 30 * scale;
 
 const sketch = () => {
+  Random.getSeed(seed);
+  // console.log('seed -> ', seed);
   // more color choices and randomness
   const colorCount = Random.rangeFloor(2, 6);
   const palette = Random.shuffle(Random.pick(palettes))

@@ -10,8 +10,10 @@ const rnd = require('canvas-sketch-util/random');
 const p5 = require('p5');
 new p5();
 
-const seed = 'takawo_012_060822';
+const seed = '767689';
+// const seed = rnd.getRandomSeed();
 rnd.setSeed(seed);
+console.log('seed -> ', seed);
 
 let nColor = rnd.rangeFloor(2, 11);
 let palette = rnd.shuffle(rnd.pick(palettes)).slice(0, nColor);
@@ -19,7 +21,8 @@ let palette = rnd.shuffle(rnd.pick(palettes)).slice(0, nColor);
 const settings = {
   p5: true,
   suffix: rnd.getSeed(seed),
-  dimensions: [1024, 1024],
+  // dimensions: [1024, 1024],
+  dimensions: [512, 512],
   context: '2d',
   animate: false
 };
@@ -28,6 +31,7 @@ const sketch = () => {
   colorMode(HSB, 360, 100, 100, 100);
   // ---
   return ({ width, context }) => {
+    randomSeed(seed);
     angleMode(DEGREES);
     // ---
     // background(palette[0]);

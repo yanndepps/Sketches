@@ -8,7 +8,9 @@ const mth = require('canvas-sketch-util/math');
 
 const settings = {
   dimensions: [1080, 1080],
-  animate: true
+  animate: true,
+  fps: 30,
+  duration: 8
 };
 
 const sketch = ({ width, height }) => {

@@ -27,6 +27,8 @@ const gui = new GUI();
 const settings = {
   dimensions: [1024, 1024],
   animate: true,
+  fps: 30,
+  duration: 8,
   context: "webgl",
   attributes: {
     antialias: true

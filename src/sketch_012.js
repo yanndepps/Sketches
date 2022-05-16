@@ -13,11 +13,11 @@ const settings = {
   p5: true,
   animate: true,
   context: '2d',
-  // dimensions: [1024, 1024],
-  dimensions: 'a4',
+  dimensions: [512, 512],
+  // dimensions: 'a4',
   // dimensions: [11.69, 11.69],
-  pixelsPerInch: 72,
-  units: "in",
+  // pixelsPerInch: 72,
+  // units: "in",
   attributes: {
     antialias: true
   }

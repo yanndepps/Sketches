@@ -13,6 +13,7 @@ new p5();
 
 let palette = [];
 let seed = Math.floor(Math.random() * 1000);
+// let seed = '903';
 
 const settings = {
   suffix: seed,
