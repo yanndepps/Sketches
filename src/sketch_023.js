@@ -12,13 +12,13 @@ const p5 = require('p5');
 new p5();
 
 let palette = [];
-let seed = Math.floor(Math.random() * 1000);
-// let seed = '903';
+// let seed = Math.floor(Math.random() * 1000);
+let seed = '887';
 
 const settings = {
   suffix: seed,
   p5: true,
-  dimensions: [1024, 1024],
+  dimensions: [512, 512],
   context: '2d',
   animate: false,
   attributes: {
