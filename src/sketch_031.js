@@ -1,34 +1,29 @@
 /*
- * Agents -> svg export
+ * Agents
  */
 
 const canvasSketch = require('canvas-sketch');
 const rnd = require('canvas-sketch-util/random');
 const mth = require('canvas-sketch-util/math');
-const svg = require('./canvas-to-svg.js')
 
 const settings = {
   dimensions: [1080, 1080],
-  animate: false,
-  fps: 24,
-  duration: 4,
-  scaleToView: true,
-  pixelsPerInch: 300
+  animate: true,
+  fps: 30,
+  duration: 8
 };
 
-const sketch = () => {
-  return svg(props => {
-    const { context, width, height } = props;
+const sketch = ({ width, height }) => {
+  // init objects
+  const agents = [];
+  const numAgents = 40;
+  for (let i = 0; i < numAgents; i++) {
+    const x = rnd.range(0, width);
+    const y = rnd.range(0, height);
+    agents.push(new Agent(x, y));
+  }
 
-    // init objects
-    const agents = [];
-    const numAgents = 32;
-    for (let i = 0; i < numAgents; i++) {
-      const x = rnd.range(0, width);
-      const y = rnd.range(0, height);
-      agents.push(new Agent(x, y));
-    }
-
+  return ({ context }) => {
     // consistant sizing regardless of portrait/landscape modes
     const dim = Math.min(width, height);
     const ns = Math.floor(dim * 0.0016);
@@ -64,7 +59,7 @@ const sketch = () => {
       agent.draw(context, ns);
       agent.bounce(width, height);
     });
-  });
+  };
 };
 
 canvasSketch(sketch, settings);

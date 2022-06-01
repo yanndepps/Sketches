@@ -1,3 +1,7 @@
+/*
+ *
+ */
+
 const canvasSketch = require('canvas-sketch');
 const rndm = require('canvas-sketch-util/random');
 const p5 = require('p5');
@@ -13,7 +17,7 @@ const settings = {
   p5: true,
   hotkeys: true,
   // suffix: rndm.getSeed(),
-  dimensions: [600, 600],
+  dimensions: [512, 512],
   animate: true,
   context: '2d'
 };
@@ -82,14 +86,14 @@ function drawVariation(x, y) {
   // v = hyperbolic(v, amount);
   // v = pdj(v, amount);
   // v = julia(v, amount);
-  // v = sech(v, amount);
+  v = sech(v, amount);
 
   // v = julia(sech(v, amount), amount);
 
   // for (let i = 0; i < 5; i++) {
   //   v = hyperbolic(v, amount);
   // }
-  v = d_pdj(v, amount);
+  // v = d_pdj(v, amount);
 
   let xx = map(v.x + 0.003 * randomGaussian(), x1, x2, 20, width - 20);
   let yy = map(v.y + 0.003 * randomGaussian(), y1, y2, 20, height - 20);
