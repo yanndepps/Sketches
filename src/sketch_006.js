@@ -10,8 +10,9 @@ const svg = require('./canvas-to-svg.js')
 const settings = {
   dimensions: [1080, 1080],
   animate: false,
-  fps: 24,
-  duration: 4,
+  time: 1.5,
+  // fps: 24,
+  // duration: 4,
   scaleToView: true,
   pixelsPerInch: 300
 };
@@ -22,10 +23,12 @@ const sketch = () => {
 
     // init objects
     const agents = [];
-    const numAgents = 32;
+    const numAgents = 12;
     for (let i = 0; i < numAgents; i++) {
-      const x = rnd.range(0, width);
-      const y = rnd.range(0, height);
+      // const x = rnd.range(0, width);
+      const x = width / 2 + rnd.range(-250, 250);
+      // const y = rnd.range(0, height);
+      const y = height / 2 + rnd.range(-250, 250);
       agents.push(new Agent(x, y));
     }
 
