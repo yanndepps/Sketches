@@ -24,6 +24,14 @@ const loader = new THREE.TextureLoader();
 const dogTex = loader.load("../assets/sketch_035/tex/dog.jpg");
 const overTex = loader.load("../assets/sketch_035/tex/overlay.png");
 
+// addressing modes for u and v respectively
+// dogTex.wrapS = THREE.ClampToEdgeWrapping;
+// dogTex.wrapT = THREE.ClampToEdgeWrapping;
+// dogTex.wrapS = THREE.RepeatWrapping;
+// dogTex.wrapT = THREE.RepeatWrapping;
+dogTex.wrapS = THREE.MirroredRepeatWrapping;
+dogTex.wrapT = THREE.MirroredRepeatWrapping;
+
 const sketch = ({ context }) => {
   // Create a renderer
   const renderer = new THREE.WebGLRenderer({
@@ -34,9 +42,9 @@ const sketch = ({ context }) => {
   renderer.setClearColor("#000", 1);
 
   // Setup a camera
-  // const camera = new THREE.PerspectiveCamera(50, 1, 0.01, 100);
-  const camera = new THREE.OrthographicCamera(0, 1, 1, 0, 0.1, 1000);
-  camera.position.set(0, 0, 1);
+  const camera = new THREE.PerspectiveCamera(50, 1, 0.01, 100);
+  // const camera = new THREE.OrthographicCamera(0, 1, 1, 0, 0.1, 1000);
+  camera.position.set(0, 0, 4);
   camera.lookAt(new THREE.Vector3());
 
   // Setup camera controller
@@ -70,7 +78,7 @@ const sketch = ({ context }) => {
 
   // Setup a mesh with geometry + material
   const mesh = new THREE.Mesh(geometry, shdrmat);
-  mesh.position.set(0.5, 0.5, 0);
+  // mesh.position.set(0.5, 0.5, 0);
   scene.add(mesh);
 
   // draw each frame
