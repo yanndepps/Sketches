@@ -22,6 +22,7 @@ const settings = {
 
 const loader = new THREE.TextureLoader();
 const dogTex = loader.load("../assets/sketch_035/tex/dog.jpg");
+const overTex = loader.load("../assets/sketch_035/tex/overlay.png");
 
 const sketch = ({ context }) => {
   // Create a renderer
@@ -55,6 +56,7 @@ const sketch = ({ context }) => {
     side: THREE.DoubleSide,
     uniforms: {
       diffuse: { value: dogTex },
+      overlay: { value: overTex },
       tint: { value: new THREE.Vector4(1, 0, 0, 1) },
       // playhead: { type: "f", value: 0.0 },
       time: { type: "f", value: 0.0 },
