@@ -14,7 +14,8 @@ varying vec2 vUv;
 
 void main() {
     // vec2 uvs = vUv * vec2(3.0, 2.0); // -> repeat mode with different values for u and v
-    vec2 uvs = vUv * 2.0; // -> mirror repeat mode
+    // vec2 uvs = vUv * 2.0; // -> mirror repeat mode
+    vec2 uvs = vUv / 10.0; // -> filtering
     // vec4 diffuseSample = texture2D(diffuse, uvs); // -> default wrap mode
     vec4 diffuseSample = texture2D(diffuse, uvs);
     // vec4 overlaySample = texture2D(overlay, vUv);

@@ -32,6 +32,10 @@ const overTex = loader.load("../assets/sketch_035/tex/overlay.png");
 dogTex.wrapS = THREE.MirroredRepeatWrapping;
 dogTex.wrapT = THREE.MirroredRepeatWrapping;
 
+// filter
+// dogTex.magFilter = THREE.NearestFilter;
+dogTex.magFilter = THREE.LinearFilter;
+
 const sketch = ({ context }) => {
   // Create a renderer
   const renderer = new THREE.WebGLRenderer({
