@@ -1,24 +1,27 @@
 /*
  * GLSL from Scratch
- * section 02 -> intro
+ * section 03 -> textures
  */
 
 global.THREE = require("three");
 require("three/examples/js/controls/OrbitControls");
 
-const fragment = require("../shaders/sketch_034/fragment.glsl");
-const vertex = require("../shaders/sketch_034/vertex.glsl");
+const fragment = require("../shaders/sketch_035/fragment.glsl");
+const vertex = require("../shaders/sketch_035/vertex.glsl");
 
 const canvasSketch = require("canvas-sketch");
 
 const settings = {
-  dimensions: [640, 640],
+  dimensions: [1080, 1080],
   animate: true,
   context: "webgl",
   attributes: {
     antialias: true
   }
 };
+
+const loader = new THREE.TextureLoader();
+const dogTex = loader.load("../assets/sketch_035/tex/dog.jpg");
 
 const sketch = ({ context }) => {
   // Create a renderer
@@ -42,7 +45,7 @@ const sketch = ({ context }) => {
   const scene = new THREE.Scene();
 
   // Setup a geometry
-  const geometry = new THREE.PlaneBufferGeometry(1, 1);
+  const geometry = new THREE.PlaneBufferGeometry(4, 4);
 
   // shader material
   const shdrmat = new THREE.ShaderMaterial({
@@ -51,34 +54,17 @@ const sketch = ({ context }) => {
     },
     side: THREE.DoubleSide,
     uniforms: {
-      color1: { value: new THREE.Vector4(1, 1, 0, 1) },
-      color2: { value: new THREE.Vector4(0, 1, 1, 1) },
+      diffuse: { value: dogTex },
+      tint: { value: new THREE.Vector4(1, 0, 0, 1) },
       // playhead: { type: "f", value: 0.0 },
       time: { type: "f", value: 0.0 },
       u_resolution: { type: "v2", value: new THREE.Vector2() },
-      // colors: { type: "fv1", value: colors },
-      uvRate1: {
-        value: new THREE.Vector2(1, 1),
-      },
     },
     wireframe: false,
     transparent: false,
     vertexShader: vertex,
     fragmentShader: fragment,
   });
-
-  const colors = [
-    new THREE.Color(0xFF0000),
-    new THREE.Color(0x00FF00),
-    new THREE.Color(0x0000FF),
-    new THREE.Color(0x00FFFF)
-  ];
-
-  const colorFloats = colors.map(c => c.toArray()).flat();
-  geometry.setAttribute(
-    'deppsColors',
-    new THREE.Float32BufferAttribute(colorFloats, 3)
-  );
 
   // Setup a mesh with geometry + material
   const mesh = new THREE.Mesh(geometry, shdrmat);
