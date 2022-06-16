@@ -1,14 +1,14 @@
 /*
  * GLSL from Scratch
  * section 04 -> common functions and tricks
- * step, mix, smoothstep
+ * min, max, clamp, saturate
  */
 
 global.THREE = require("three");
 require("three/examples/js/controls/OrbitControls");
 
-const fragment = require("../shaders/sketch_036/fragment.glsl");
-const vertex = require("../shaders/sketch_036/vertex.glsl");
+const fragment = require("../shaders/sketch_037/fragment.glsl");
+const vertex = require("../shaders/sketch_037/vertex.glsl");
 
 const canvasSketch = require("canvas-sketch");
 
@@ -33,7 +33,7 @@ const sketch = ({ context }) => {
   // Setup a camera
   const camera = new THREE.PerspectiveCamera(50, 1, 0.01, 100);
   // const camera = new THREE.OrthographicCamera(0, 1, 1, 0, 0.1, 1000);
-  camera.position.set(0, 0, -4.4);
+  camera.position.set(0, 0, -4);
   camera.lookAt(new THREE.Vector3());
 
   // Setup camera controller
