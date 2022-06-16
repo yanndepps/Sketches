@@ -12,7 +12,7 @@ const vertex = require("../shaders/sketch_036/vertex.glsl");
 const canvasSketch = require("canvas-sketch");
 
 const settings = {
-  dimensions: [1080, 1080],
+  dimensions: [512, 512],
   animate: true,
   context: "webgl",
   attributes: {
