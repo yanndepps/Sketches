@@ -32,7 +32,7 @@ const sketch = ({ context }) => {
   // Setup a camera
   const camera = new THREE.PerspectiveCamera(50, 1, 0.01, 100);
   // const camera = new THREE.OrthographicCamera(0, 1, 1, 0, 0.1, 1000);
-  camera.position.set(0, 0, -4);
+  camera.position.set(0, 0, -4.4);
   camera.lookAt(new THREE.Vector3());
 
   // Setup camera controller

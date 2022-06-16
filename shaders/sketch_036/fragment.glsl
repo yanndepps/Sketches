@@ -9,14 +9,29 @@ varying vec2 vUv;
 
 void main() {
   vec3 color = vec3(0.0);
-  // color = vec3(step(0.25, vUv.x));
+
+  // float line = vUv.y - 0.5;
+  // float line = abs( vUv.y - 0.5 );
+  float value_1 = vUv.x;
+  float value_2 = smoothstep(0.0, 1.0, vUv.x);
+
+  float line = smoothstep(0.0, 0.005, abs( vUv.y - 0.5 ) );
+  float linearLine = smoothstep(0.0, 0.005, abs(vUv.y - mix(0.5, 1.0, 1.0 - value_1)));
+  float smoothLine = smoothstep(0.0, 0.005, abs(vUv.y - mix(0.0, 0.5, 1.0 - value_2)));
+
   vec3 red = vec3(1.0, 0.0, 0.0);
   vec3 blue = vec3(0.0, 0.0, 1.0);
+  vec3 white = vec3(1.0, 1.0, 1.0);
 
-  // color = mix(red, blue, vUv.x);
-  // color = vec3(vUv.x);
-  // color = vec3(smoothstep(0.0, 1.0, 1.0 - vUv.x));
-  color = mix(red, blue, smoothstep(0.0, 1.0, vUv.x));
+  if (vUv.y > 0.5) {
+      color = mix(red, blue, vUv.x);
+  } else {
+      color = mix(red, blue, smoothstep(0.0, 1.0, vUv.x));
+  }
+
+  color = mix(white, color, line);
+  color = mix(white, color, linearLine);
+  color = mix(white, color, smoothLine);
 
   gl_FragColor=vec4(color, 1.0);
 }
