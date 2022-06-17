@@ -14,7 +14,7 @@ const vertex = require("../shaders/sketch_038/vertex.glsl");
 const canvasSketch = require("canvas-sketch");
 
 const settings = {
-  dimensions: [512, 512],
+  dimensions: [600, 600],
   animate: true,
   context: "webgl",
   attributes: {
@@ -34,7 +34,7 @@ const sketch = ({ context }) => {
   // Setup a camera
   const camera = new THREE.PerspectiveCamera(50, 1, 0.01, 100);
   // const camera = new THREE.OrthographicCamera(0, 1, 1, 0, 0.1, 1000);
-  camera.position.set(0, 0, -4);
+  camera.position.set(0, 0, 1.1);
   camera.lookAt(new THREE.Vector3());
 
   // Setup camera controller
@@ -44,7 +44,7 @@ const sketch = ({ context }) => {
   const scene = new THREE.Scene();
 
   // Setup a geometry
-  const geometry = new THREE.PlaneBufferGeometry(4, 4);
+  const geometry = new THREE.PlaneBufferGeometry(1, 1);
 
   // shader material
   const shdrmat = new THREE.ShaderMaterial({
