@@ -18,14 +18,16 @@ float remap(float v, float inMin, float inMax, float outMin, float outMax) {
 }
 
 void main() {
-  vec3 red = vec3(1.0, 0.0, 0.0);
-  vec3 blue = vec3(0.0, 0.0, 1.0);
   vec3 color = vec3(0.0);
+  // float t1 = sin(vUv.x * 100.0);
+  // float t2 = sin(vUv.y * 100.0);
 
-  float t = sin(time);
-  t = remap(t, -1.0, 1.0, 0.0, 1.0);
+  // color = vec3(t1 * t2);
+  // color = vec3(max( t1, t2 ));
 
-  color = mix(red, blue, t);
+  float t1 = remap(sin(vUv.y * 400.0 + time * 10.0), -1.0, 1.0, 0.9, 1.0);
+  float t2 = remap(sin(vUv.y * 50.0 - time * 2.0), -1.0, 1.0, 0.9, 1.0);
+  color = texture2D(diffuse1, vUv).xyz * t1 * t2;
 
   gl_FragColor=vec4(color, 1.0);
 }
