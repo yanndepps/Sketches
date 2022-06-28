@@ -1,14 +1,14 @@
 /*
  * GLSL from Scratch
- * section 04 -> common functions and tricks
- * fract & friends
+ * section 05 -> vector operations & maths
+ * sin/cos
  */
 
 global.THREE = require("three");
 require("three/examples/js/controls/OrbitControls");
 
-const fragment = require("../shaders/sketch_038/fragment.glsl");
-const vertex = require("../shaders/sketch_038/vertex.glsl");
+const fragment = require("../shaders/sketch_039/fragment.glsl");
+const vertex = require("../shaders/sketch_039/vertex.glsl");
 
 const canvasSketch = require("canvas-sketch");
 
@@ -20,6 +20,10 @@ const settings = {
     antialias: true
   }
 };
+
+const loader = new THREE.TextureLoader();
+const dogTex = loader.load("../assets/sketch_039/tex/dog.jpg");
+
 
 const sketch = ({ context }) => {
   // Create a renderer
@@ -52,6 +56,7 @@ const sketch = ({ context }) => {
     },
     side: THREE.DoubleSide,
     uniforms: {
+      diffuse1: { value: dogTex },
       // playhead: { type: "f", value: 0.0 },
       time: { type: "f", value: 0.0 },
       u_resolution: { type: "v2", value: new THREE.Vector2() },
