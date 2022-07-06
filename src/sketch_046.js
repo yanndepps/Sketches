@@ -1,6 +1,7 @@
 /*
  * GLSL from Scratch
  * section 07 -> vertex shaders
+ * simple transformations
  */
 
 const THREE = global.THREE = require("three");

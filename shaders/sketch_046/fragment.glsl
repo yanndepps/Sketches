@@ -6,7 +6,6 @@ uniform float time;
 uniform vec2 u_resolution;
 uniform samplerCube specMap;
 
-varying vec2 vUv;
 varying vec3 vNormal;
 varying vec3 vPosition;
 
