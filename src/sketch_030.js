@@ -23,8 +23,8 @@ const settings = {
   p5: true,
   suffix: rnd.getSeed(seed),
   // dimensions: [1024, 1024],
-  dimensions: [512, 512],
-  // dimensions: 'A4',
+  // dimensions: [512, 512],
+  dimensions: 'A4',
   // orientation: 'portrait',
   context: '2d',
   animate: false
