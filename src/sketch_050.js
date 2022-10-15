@@ -1,5 +1,5 @@
 /*
- * creative coding 2.0 -> animation, sound, color
+ * Creative Coding 2.0 -> animation, sound, color
  * U3 -> Skew
  */
 
