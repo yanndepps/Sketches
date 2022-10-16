@@ -1,7 +1,7 @@
 /*
  * Creative Coding 2.0 -> animation, sound, color
  * U4 -> Curves
- * Part I
+ * Part I -> quadratic curves
  */
 
 const canvasSketch = require('canvas-sketch');
