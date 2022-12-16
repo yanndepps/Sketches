@@ -79,7 +79,7 @@
 <tr>
 <td class="org-left"><img src="./examples/001.gif" alt="001.gif" width="240" /></td>
 <td class="org-left"><img src="./examples/002.gif" alt="002.gif" width="240" /></td>
-<td class="org-left"><img src="./examples/003.gif" alt="003.gif" width="240" /></td>
+<td class="org-left"><img src="./examples/003.gif" alt="010.gif" width="240" /></td>
 </tr>
 </tbody>
 
