@@ -1,19 +1,43 @@
+
+
 # About
 
--   [canvas-sketch](https://github.com/mattdesl/canvas-sketch) is a loose collection of tools, modules and ressources for creating generative art in JavaScript and the browser using `<canvas>` tag. it is designed to help create artworks and images with code, randomness, algorithms and emergent systems.
--   it exports high-resolution PNG or Giclée prints, render image sequences to GIF and MP4 loops, generates SVG files for mechanical pen plotters, automatically git hash your artworks for long-term archiving, and much more.
--   these tools can be used on their own, or can be combined with your favourite graphics library like ThreeJS, P5.js, D3, etc.
+-   An attempt to create a new, clean and light repo of my latest artworks built with `canvas-sketch`.
 
+
+# Contents
+
+-   [Overview](#org8415f5f)
+
+
+<a id="org8415f5f"></a>
 
 # Overview
 
--   this is my attempt to create a new, clean and light repo of my latest artworks built with `canvas-sketch`.
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
-# Examples
+<colgroup>
+<col  class="org-left" />
 
-| Example screenshots                          |                                              |                                              |
-|----------------------------------------------|----------------------------------------------|----------------------------------------------|
-| <img src="./examples/001.gif" width="256" /> | <img src="./examples/002.gif" width="256" /> | <img src="./examples/003.gif" width="256" /> |
-| <img src="./examples/004.gif" width="256" /> | <img src="./examples/005.gif" width="256" /> | <img src="./examples/006.gif" width="256" /> |
-| <img src="./examples/007.gif" width="256" /> | <img src="./examples/008.gif" width="256" /> | <img src="./examples/009.gif" width="256" /> |
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Example Screenshots</th>
+<th scope="col" class="org-left">( small selection )</th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td class="org-left"><img src="./examples/001.gif" alt="001.gif" width="240" /></td>
+<td class="org-left"><img src="./examples/002.gif" alt="002.gif" width="240" /></td>
+<td class="org-left"><img src="./examples/003.gif" alt="003.gif" width="240" /></td>
+</tr>
+</tbody>
+</table>
+
